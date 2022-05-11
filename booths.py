@@ -17,13 +17,13 @@ def get_value(num: int, choice: str) -> int:
 
     requested_value = 0
     if choice == "a":
-        requested_value = (num >> 9) & 0b1111_1111
+        requested_value = (num >> 9) & 0xFF
     elif choice == "q":
-        requested_value = (num >> 1) & 0b1111_1111
+        requested_value = (num >> 1) & 0xFF
     elif choice == "q1":
         requested_value = num & 1
     elif choice == "aq":
-        requested_value = (num >> 1) & 0b1111_1111_1111_1111
+        requested_value = (num >> 1) & 0xFFFF
     else:
         print("ERROR: invaild register!\n")
 
@@ -40,7 +40,7 @@ def safe_clear():
 
 def main():
     N = 0
-    a = 0b0000_0000
+    a = 0x00
     q_1 = 0
 
     a_q_merge = 0b0000_0000_0000_0000_0
@@ -96,7 +96,7 @@ def main():
 
             print(f"Cycle {N} +++++++ Step 0 0\n")
         elif is_kth_bit_set(a_q_merge, 2) and not is_kth_bit_set(a_q_merge, 1):
-            a = (get_value(a_q_merge, "a") + (~m) + 1) & 0b1111_1111
+            a = (get_value(a_q_merge, "a") + (~m) + 1) & 0xFF
             a_q_merge = (a_q_merge & 0b0000_0000_1111_1111_1)
             a_q_merge |= (a << 9)
 
@@ -109,7 +109,7 @@ def main():
             N += 1
             print(f"Cycle {N} +++++++ Step 1 0\n")
         elif not is_kth_bit_set(a_q_merge, 2) and is_kth_bit_set(a_q_merge, 1):
-            a = (get_value(a_q_merge, "a") + m) & 0b1111_1111
+            a = (get_value(a_q_merge, "a") + m) & 0xFF
             a_q_merge = (a_q_merge & 0b0000_0000_1111_1111_1)
             a_q_merge |= (a << 9)
 
